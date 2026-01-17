@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Maki Optimization - Tax-efficient withdrawal strategy calculator">
+  <title>Maki Optimization | Tax-Efficient Withdrawal Calculator</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+
+<body>
+  <div class="container">
+    <!-- Header -->
+    <header>
+      <h1>Maki Optimization</h1>
+      <p class="subtitle">Minimize your tax burden with intelligent withdrawal strategies</p>
+    </header>
+
+    <!-- Input Section -->
+    <div class="card">
+      <h2 class="card-title">Tax Configuration</h2>
+      <div class="form-grid">
+        <div class="form-group">
+          <label for="filingStatus">Filing Status</label>
+          <select id="filingStatus">
+            <option value="single">Single</option>
+            <option value="marriedFilingJointly">Married Filing Jointly</option>
+            <option value="marriedFilingSeparately">Married Filing Separately</option>
+            <option value="headOfHousehold">Head of Household</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="state">State</label>
+          <select id="state">
+            <option value="">Select State...</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="desiredIncome">Desired Income</label>
+          <input type="text" id="desiredIncome" placeholder="100000" inputmode="numeric">
+        </div>
+      </div>
+    </div>
+
+    <!-- Account Balances -->
+    <div class="card">
+      <h2 class="card-title">Account Balances</h2>
+      <div class="account-grid">
+        <!-- Municipal Bonds -->
+        <div class="account-card">
+          <div class="account-header">
+            <div class="account-icon muni">MB</div>
+            <div>
+              <div class="account-name">Municipal Bonds</div>
+              <div class="slider-label">Tax-free federally</div>
+            </div>
+          </div>
+          <div class="form-group">
+            <input type="text" id="muniBonds" placeholder="0" inputmode="numeric">
+            <input type="range" id="muniBondsSlider" min="0" max="5000000" step="10000" value="0"
+              class="balance-slider">
+          </div>
+        </div>
+
+        <!-- Long-term Capital Gains -->
+        <div class="account-card">
+          <div class="account-header">
+            <div class="account-icon ltcg">LT</div>
+            <div>
+              <div class="account-name">Long-Term Gains</div>
+              <div class="slider-label">Preferential rates</div>
+            </div>
+          </div>
+          <div class="form-group">
+            <input type="text" id="longTermGains" placeholder="0" inputmode="numeric">
+            <input type="range" id="longTermGainsSlider" min="0" max="5000000" step="10000" value="0"
+              class="balance-slider">
+          </div>
+        </div>
+
+        <!-- Short-term Capital Gains -->
+        <div class="account-card">
+          <div class="account-header">
+            <div class="account-icon stcg">ST</div>
+            <div>
+              <div class="account-name">Short-Term Gains</div>
+              <div class="slider-label">Ordinary income rates</div>
+            </div>
+          </div>
+          <div class="form-group">
+            <input type="text" id="shortTermGains" placeholder="0" inputmode="numeric">
+            <input type="range" id="shortTermGainsSlider" min="0" max="5000000" step="10000" value="0"
+              class="balance-slider">
+          </div>
+        </div>
+
+        <!-- IRA -->
+        <div class="account-card">
+          <div class="account-header">
+            <div class="account-icon ira">IRA</div>
+            <div>
+              <div class="account-name">Traditional IRA</div>
+              <div class="slider-label">Fully taxable</div>
+            </div>
+          </div>
+          <div class="form-group">
+            <input type="text" id="ira" placeholder="0" inputmode="numeric">
+            <input type="range" id="iraSlider" min="0" max="5000000" step="10000" value="0" class="balance-slider">
+          </div>
+        </div>
+      </div>
+
+      <button class="btn btn-full" id="calculateBtn">Calculate Optimal Strategy</button>
+    </div>
+
+    <!-- Results Section -->
+    <div id="resultsSection" class="hidden">
+      <!-- Multi-Year Withdrawal Plan -->
+      <div class="card fade-in">
+        <h2 class="card-title">Multi-Year Withdrawal Plan</h2>
+
+        <!-- Summary Metrics -->
+        <div class="results-grid">
+          <div class="result-item">
+            <div class="result-label">Total Years</div>
+            <div class="result-value" id="totalYears">0</div>
+          </div>
+          <div class="result-item">
+            <div class="result-label">Total Taxes Paid</div>
+            <div class="result-value" id="totalTaxesPaid">$0</div>
+          </div>
+          <div class="result-item">
+            <div class="result-label">Total Withdrawn</div>
+            <div class="result-value" id="totalWithdrawn">$0</div>
+          </div>
+          <div class="result-item">
+            <div class="result-label">Average Effective Rate</div>
+            <div class="result-value" id="avgEffectiveRate">0%</div>
+          </div>
+        </div>
+
+        <!-- Year-by-Year Table -->
+        <div class="table-container">
+          <table id="yearlyBreakdown">
+            <thead>
+              <tr>
+                <th>Year</th>
+                <th>Muni Bonds</th>
+                <th>Long-Term Gains</th>
+                <th>Short-Term Gains</th>
+                <th>Traditional IRA</th>
+                <th>Total Withdrawn</th>
+                <th>Total Tax</th>
+                <th>Tax %</th>
+                <th>Post-Tax Income</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- Populated by JavaScript -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  </div>
+  </div>
+
+  <!-- Scripts -->
+  <script src="tax-data.js"></script>
+  <script src="tax-calculator.js"></script>
+  <script src="optimizer.js"></script>
+  <script src="app.js"></script>
+</body>
+
+</html>
