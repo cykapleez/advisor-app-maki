@@ -62,22 +62,76 @@ class MakiOptimizationApp {
             const textInput = document.getElementById(textId);
             const slider = document.getElementById(sliderId);
 
-            // When text input changes, update slider
+            // When text input changes, update slider and balance preview
             textInput.addEventListener('input', (e) => {
                 const value = parseFloat(e.target.value.replace(/,/g, '')) || 0;
                 slider.value = value;
+                this.updateBalancePreview();
             });
 
-            // When slider changes, update text input
+            // When slider changes, update text input and balance preview
             slider.addEventListener('input', (e) => {
                 const value = parseFloat(e.target.value);
                 textInput.value = this.formatNumberWithCommas(value);
+                this.updateBalancePreview();
             });
         });
+
+        // Initial update
+        this.updateBalancePreview();
     }
 
     formatNumberWithCommas(number) {
         return Math.round(number).toLocaleString('en-US');
+    }
+
+    updateBalancePreview() {
+        // Get current account balances
+        const accounts = {
+            muniBonds: parseFloat(document.getElementById('muniBonds').value.replace(/,/g, '')) || 0,
+            longTermGains: parseFloat(document.getElementById('longTermGains').value.replace(/,/g, '')) || 0,
+            shortTermGains: parseFloat(document.getElementById('shortTermGains').value.replace(/,/g, '')) || 0,
+            ira: parseFloat(document.getElementById('ira').value.replace(/,/g, '')) || 0
+        };
+
+        // Calculate total
+        const total = accounts.muniBonds + accounts.longTermGains + accounts.shortTermGains + accounts.ira;
+
+        // Update total balance display
+        document.getElementById('totalBalance').textContent = '$' + this.formatNumberWithCommas(total);
+
+        // Account metadata for display
+        const accountMetadata = [
+            { key: 'muniBonds', name: 'Municipal Bonds', icon: 'MB', class: 'muni' },
+            { key: 'longTermGains', name: 'Long-Term Gains', icon: 'LT', class: 'ltcg' },
+            { key: 'shortTermGains', name: 'Short-Term Gains', icon: 'ST', class: 'stcg' },
+            { key: 'ira', name: 'Traditional IRA', icon: 'IRA', class: 'ira' }
+        ];
+
+        // Update breakdown - only show non-zero balances
+        const breakdownContainer = document.getElementById('balanceBreakdown');
+        breakdownContainer.innerHTML = '';
+
+        accountMetadata.forEach(account => {
+            const balance = accounts[account.key];
+            if (balance > 0) {
+                const item = document.createElement('div');
+                item.className = 'balance-item';
+                item.innerHTML = `
+                    <div class="balance-item-name">
+                        <div class="balance-item-icon account-icon ${account.class}">${account.icon}</div>
+                        ${account.name}
+                    </div>
+                    <div class="balance-item-value">$${this.formatNumberWithCommas(balance)}</div>
+                `;
+                breakdownContainer.appendChild(item);
+            }
+        });
+
+        // If no balances, show a message
+        if (total === 0) {
+            breakdownContainer.innerHTML = '<div style="text-align: center; color: var(--text-muted); padding: 1rem;">No account balances entered</div>';
+        }
     }
 
     populateStateDropdown() {
@@ -100,18 +154,23 @@ class MakiOptimizationApp {
 
     attachEventListeners() {
         // Calculate button
-        document.getElementById('calculateBtn').addEventListener('click', () => {
-            this.calculateOptimal();
-        });
+        const calculateBtn = document.getElementById('calculateBtn');
+        if (calculateBtn) {
+            calculateBtn.addEventListener('click', () => {
+                this.calculateOptimal();
+            });
+        }
 
-        // Slider event listeners
+        // Slider event listeners (only if elements exist)
         const sliders = ['customMuniBonds', 'customLongTermGains', 'customShortTermGains', 'customIra'];
         sliders.forEach(sliderId => {
             const slider = document.getElementById(sliderId);
-            slider.addEventListener('input', () => {
-                this.updateSliderValue(sliderId);
-                this.recalculateCustom();
-            });
+            if (slider) {
+                slider.addEventListener('input', () => {
+                    this.updateSliderValue(sliderId);
+                    this.recalculateCustom();
+                });
+            }
         });
     }
 
