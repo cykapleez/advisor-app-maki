@@ -12,10 +12,12 @@ class MakiOptimizationApp {
     }
 
     init() {
+        this.initTheme();
         this.populateStateDropdown();
         this.attachEventListeners();
         this.setupNumberFormatting();
         this.setupBalanceSliders();
+        this.setupThemeSwitcher();
     }
 
     setupNumberFormatting() {
@@ -47,6 +49,40 @@ class MakiOptimizationApp {
                 }
             });
         });
+    }
+
+    // Theme Management
+    initTheme() {
+        const savedTheme = localStorage.getItem('maki-theme') || 'navy';
+        this.switchTheme(savedTheme, false);
+
+        // Set the select value
+        const themeSelect = document.getElementById('themeSelect');
+        if (themeSelect) {
+            themeSelect.value = savedTheme;
+        }
+    }
+
+    switchTheme(themeName, save = true) {
+        // Remove all theme classes
+        document.body.classList.remove('theme-navy', 'theme-slate', 'theme-indigo');
+
+        // Add the selected theme class
+        document.body.classList.add(`theme-${themeName}`);
+
+        // Save to localStorage
+        if (save) {
+            localStorage.setItem('maki-theme', themeName);
+        }
+    }
+
+    setupThemeSwitcher() {
+        const themeSelect = document.getElementById('themeSelect');
+        if (themeSelect) {
+            themeSelect.addEventListener('change', (e) => {
+                this.switchTheme(e.target.value);
+            });
+        }
     }
 
     setupBalanceSliders() {

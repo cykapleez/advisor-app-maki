@@ -16,6 +16,16 @@
   --glow-purple: rgba(139, 92, 246, 0.4);
   --glow-blue: rgba(59, 130, 246, 0.4);
 
+  /* Account Icon Colors */
+  --icon-muni-1: #10b981;
+  --icon-muni-2: #059669;
+  --icon-ltcg-1: #3b82f6;
+  --icon-ltcg-2: #2563eb;
+  --icon-stcg-1: #f59e0b;
+  --icon-stcg-2: #d97706;
+  --icon-ira-1: #8b5cf6;
+  --icon-ira-2: #7c3aed;
+
   /* Spacing */
   --spacing-xs: 0.5rem;
   --spacing-sm: 1rem;
@@ -33,6 +43,88 @@
   --transition-base: 250ms ease;
   --transition-slow: 400ms ease;
 }
+
+/* Theme 1: Navy Blue (Corporate) */
+body.theme-navy {
+  --primary-bg: #0f172a;
+  --secondary-bg: #1e293b;
+  --card-bg: rgba(30, 41, 59, 0.6);
+  --accent-purple: #06b6d4;
+  --accent-blue: #0ea5e9;
+  --accent-green: #10b981;
+  --accent-red: #ef4444;
+  --text-primary: #f8fafc;
+  --text-secondary: #cbd5e1;
+  --text-muted: #94a3b8;
+  --border-color: rgba(6, 182, 212, 0.2);
+  --glow-purple: rgba(6, 182, 212, 0.4);
+  --glow-blue: rgba(14, 165, 233, 0.4);
+
+  /* Account Icon Colors - Keep original vibrant colors */
+  --icon-muni-1: #10b981;
+  --icon-muni-2: #059669;
+  --icon-ltcg-1: #06b6d4;
+  --icon-ltcg-2: #0891b2;
+  --icon-stcg-1: #f59e0b;
+  --icon-stcg-2: #d97706;
+  --icon-ira-1: #8b5cf6;
+  --icon-ira-2: #7c3aed;
+}
+
+/* Theme 3: Slate Platinum (Minimalist) */
+body.theme-slate {
+  --primary-bg: #0f1419;
+  --secondary-bg: #1c2128;
+  --card-bg: rgba(28, 33, 40, 0.6);
+  --accent-purple: #94a3b8;
+  --accent-blue: #64748b;
+  --accent-green: #10b981;
+  --accent-red: #ef4444;
+  --text-primary: #f1f5f9;
+  --text-secondary: #cbd5e1;
+  --text-muted: #94a3b8;
+  --border-color: rgba(148, 163, 184, 0.2);
+  --glow-purple: rgba(148, 163, 184, 0.3);
+  --glow-blue: rgba(100, 116, 139, 0.3);
+
+  /* Account Icon Colors - Grayscale palette for minimalist theme */
+  --icon-muni-1: #94a3b8;
+  --icon-muni-2: #64748b;
+  --icon-ltcg-1: #cbd5e1;
+  --icon-ltcg-2: #94a3b8;
+  --icon-stcg-1: #64748b;
+  --icon-stcg-2: #475569;
+  --icon-ira-1: #94a3b8;
+  --icon-ira-2: #64748b;
+}
+
+/* Theme 4: Deep Indigo (Premium) */
+body.theme-indigo {
+  --primary-bg: #0c0e1f;
+  --secondary-bg: #1a1d3a;
+  --card-bg: rgba(26, 29, 58, 0.6);
+  --accent-purple: #f59e0b;
+  --accent-blue: #fb923c;
+  --accent-green: #10b981;
+  --accent-red: #ef4444;
+  --text-primary: #faf5ff;
+  --text-secondary: #e0e7ff;
+  --text-muted: #a5b4fc;
+  --border-color: rgba(245, 158, 11, 0.2);
+  --glow-purple: rgba(245, 158, 11, 0.4);
+  --glow-blue: rgba(251, 146, 60, 0.4);
+
+  /* Account Icon Colors - Warm amber/indigo palette */
+  --icon-muni-1: #10b981;
+  --icon-muni-2: #059669;
+  --icon-ltcg-1: #6366f1;
+  --icon-ltcg-2: #4f46e5;
+  --icon-stcg-1: #f59e0b;
+  --icon-stcg-2: #d97706;
+  --icon-ira-1: #a78bfa;
+  --icon-ira-2: #8b5cf6;
+}
+
 
 * {
   margin: 0;
@@ -87,9 +179,21 @@ body::before {
 
 /* Header */
 header {
-  text-align: center;
   margin-bottom: var(--spacing-xl);
   animation: fadeInDown 0.6s ease;
+}
+
+.header-content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: var(--spacing-lg);
+  flex-wrap: wrap;
+}
+
+.header-content>div:first-child {
+  text-align: center;
+  flex: 1;
 }
 
 h1 {
@@ -108,6 +212,51 @@ h1 {
   color: var(--text-secondary);
   font-weight: 400;
 }
+
+/* Theme Switcher */
+.theme-switcher {
+  display: flex;
+  align-items: center;
+  gap: var(--spacing-sm);
+  padding: var(--spacing-sm);
+  background: rgba(15, 23, 42, 0.6);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-md);
+  backdrop-filter: blur(10px);
+}
+
+.theme-switcher label {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  text-transform: none;
+  letter-spacing: normal;
+  margin: 0;
+}
+
+.theme-select {
+  background: rgba(15, 23, 42, 0.8);
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius-sm);
+  padding: 0.5rem 0.75rem;
+  color: var(--text-primary);
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--transition-base);
+  min-width: 150px;
+}
+
+.theme-select:hover {
+  border-color: var(--accent-purple);
+}
+
+.theme-select:focus {
+  outline: none;
+  border-color: var(--accent-purple);
+  box-shadow: 0 0 0 2px var(--glow-purple);
+}
+
 
 /* Cards */
 .card {
@@ -229,19 +378,19 @@ input::placeholder {
 }
 
 .account-icon.muni {
-  background: linear-gradient(135deg, #10b981, #059669);
+  background: linear-gradient(135deg, var(--icon-muni-1), var(--icon-muni-2));
 }
 
 .account-icon.ltcg {
-  background: linear-gradient(135deg, #3b82f6, #2563eb);
+  background: linear-gradient(135deg, var(--icon-ltcg-1), var(--icon-ltcg-2));
 }
 
 .account-icon.stcg {
-  background: linear-gradient(135deg, #f59e0b, #d97706);
+  background: linear-gradient(135deg, var(--icon-stcg-1), var(--icon-stcg-2));
 }
 
 .account-icon.ira {
-  background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+  background: linear-gradient(135deg, var(--icon-ira-1), var(--icon-ira-2));
 }
 
 .account-name {
@@ -449,19 +598,19 @@ input[type="range"]::-moz-range-thumb:hover {
 }
 
 .balance-item-icon.muni {
-  background: linear-gradient(135deg, #10b981, #059669);
+  background: linear-gradient(135deg, var(--icon-muni-1), var(--icon-muni-2));
 }
 
 .balance-item-icon.ltcg {
-  background: linear-gradient(135deg, #3b82f6, #2563eb);
+  background: linear-gradient(135deg, var(--icon-ltcg-1), var(--icon-ltcg-2));
 }
 
 .balance-item-icon.stcg {
-  background: linear-gradient(135deg, #f59e0b, #d97706);
+  background: linear-gradient(135deg, var(--icon-stcg-1), var(--icon-stcg-2));
 }
 
 .balance-item-icon.ira {
-  background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+  background: linear-gradient(135deg, var(--icon-ira-1), var(--icon-ira-2));
 }
 
 .balance-item-value {
